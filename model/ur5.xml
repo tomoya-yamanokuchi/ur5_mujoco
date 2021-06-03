@@ -48,23 +48,26 @@
         <mesh file="link6_connector.stl" />
 
         <texture name="floor_tile" file="meshes/floor_tile.png" width="3000" height="3000" type="2d"/>
-        <material name="tile" texture="floor_tile" specular="0" shininess="0" reflectance="0" emission="1" />
+        <material name="tile"   texture="floor_tile" specular="0" shininess="0" reflectance="0" emission="1" />
+
+
         <material name="silver" specular="1" shininess="0.5" reflectance="1" emission="0.25" rgba="0.82 0.82 0.82 1"/>
-        <material name="grey" specular="1" shininess="0.5" reflectance="1" emission="0.1" rgba="0.5 0.5 0.5 1"/>
-        <material name="blue" specular="1" shininess="0.5" reflectance="1" emission="0" rgba="0.678 0.847 0.902 1"/>
-        <material name="black" specular="1" shininess="0.5" reflectance="1" emission="0" rgba="0.2 0.2 0.2 1"/>
+        <material name="grey"   specular="1" shininess="0.5" reflectance="1" emission="0.1"  rgba="0.5 0.5 0.5 1"/>
+        <material name="blue"   specular="1" shininess="0.5" reflectance="1" emission="0"    rgba="0.678 0.847 0.902 1"/>
+        <material name="black"  specular="1" shininess="0.5" reflectance="1" emission="0"    rgba="0.2 0.2 0.2 1"/>
     </asset>
 
     <worldbody>
-        <geom name="floor_grey_tile" pos="0 0 -0.001" size="0.75 0.75 0.05" type="plane" material="tile"/>
+        <geom name="floor_grey_tile" pos="0 0 -0.001" size="1.0 1.0 0.05" type="plane" material="tile"/>
 
         <!-- light -->
         <light directional="true" pos="-0.5 0.5 3" dir="0 0 -1" />
 
         <!-- camera -->
-        <camera name="camera1" mode= "fixed" euler="0 0 1.5707963267948966" pos="0 0 0.33"/>
-        <camera name="camera2" mode= "fixed" euler="0 0 1.5707963267948966" pos="0 0.33 0"/>
-        <camera name="camera3" mode= "fixed" euler="0 0 1.5707963267948966" pos="0.33 0 0"/>
+        <camera name="camera1" mode= "fixed" euler="0 1.57 1.57" pos="1.0 0 0.3"/>
+        <camera name="camera2" mode= "fixed" euler="-0.7 0 3.141592653589793" pos="0 1.2 1.2"/>
+        <camera name="camera3" mode= "fixed" euler="0 0 3.141592653589793" pos="0 0.18 1.4"/>
+        <!-- <camera name="camera4" mode= "fixed" euler="0 0 3.141592653589793" pos="0 0.18 1.4"/> -->
 
 
         <body name="base_link" pos="0 0 0">

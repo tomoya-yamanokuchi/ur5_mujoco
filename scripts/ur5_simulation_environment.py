@@ -1,4 +1,5 @@
 import copy
+import cv2
 import numpy as np
 import mujoco_py
 from mujoco_py.modder   import TextureModder, CameraModder
@@ -16,20 +17,14 @@ class UR5SimulationEnvironment:
         self.texture_modder       = TextureModder(self.sim)
         self.camera_modder        = CameraModder(self.sim)
         self.is_viewer_off_screen = config.is_viewer_off_screen
+        self.is_render            = config.is_render
         self.viewer               = self.select_viewer()
-        self.camera_position      = config.camera_position
-        self.claw_jnt_range_lb    = config.claw_jnt_range_lb
-        self.claw_jnt_range_ub    = config.claw_jnt_range_ub
-        self.valve_jnt_range_lb   = config.valve_jnt_range_lb
-        self.valve_jnt_range_ub   = config.valve_jnt_range_ub
-        # self._valve_jnt_id        = self.sim.model.joint_name2id('valve_OBJRx')
-        # self._target_bid          = self.model.body_name2id('target')
-        # self._target_sid          = self.model.site_name2id('tmark')
-        # self.geom_names_hander    = ModelGeometryNamesHandler()
+        self.width_capture        = config.width_capture
+        self.height_capture       = config.height_capture
+        self.viewer_position      = config.viewer_param()
+        self.inner_step           = config.inner_step
         self.set_random_seed()
-        # self.set_geom_rgb()
-        # self.set_texture_rgb()
-        # self.set_camera_position()
+        self.windowName = "ur5"
         return None
 
 
@@ -44,33 +39,28 @@ class UR5SimulationEnvironment:
         np.random.seed(self.seed)
 
 
-    # def set_geom_rgb(self):
-    #     # my_red   = [230,  74,  25]
-    #     my_red   = [209,  49,  45]
-    #     my_white = [255, 255, 255]
-    #     my_green = [ 27, 176,  27]
-    #     my_black = [ 38 , 38 , 38]
-
-    #     self.rgb = dict()
-    #     self.set_geom_names_randomize_target()
-    #     self.rgb[self.__geom_names_randomize_target[0]] = np.array(my_green)
-    #     self.rgb[self.__geom_names_randomize_target[1]] = np.array(my_white)
-    #     for i in range(len(self.__geom_names_randomize_target))[2:-3]:
-    #         self.rgb[self.__geom_names_randomize_target[i]] = np.array(my_black)
-    #     for i in range(len(self.__geom_names_randomize_target))[-3:]:
-    #         self.rgb[self.__geom_names_randomize_target[i]] = np.array(my_red)
+    def _render_and_convert_color(self, camera_name):
+        img = self.sim.render(width=self.width_capture, height=self.height_capture, camera_name=camera_name, depth=False)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)[::-1]
+        return img
 
 
-    # def set_geom_names_randomize_target(self):
-    #     self.__geom_names_randomize_target = self.geom_names_hander.get_all_names()
+    def render(self, render_num=1):
+        for index_render_num in range(render_num):
+            img  = {}
+            for camera_name in self.sim.model.camera_names:
+                img[camera_name] = self._render_and_convert_color(camera_name=camera_name)
+            self.render_show(img)
+        return img
 
 
-    # def set_texture_rgb(self):
-    #     for name in self.__geom_names_randomize_target:
-    #         self.texture_modder.set_rgb(name, self.rgb[name])
+    def render_show(self, img):
+        if self.is_render == 1:
+            cv2.imshow(self.windowName, np.hstack(img.values()))
+            cv2.waitKey(20)
 
 
-    def render(self):
+    def viewer_render(self):
         self.viewer.render()
 
 
@@ -149,6 +139,19 @@ class UR5SimulationEnvironment:
         self.sim.step()
 
 
+    def step_multi(self, inner_step=-1):
+        assert type(inner_step ) == int
+        if inner_step < 0:
+            inner_step = self.inner_step
+        for i in range(inner_step):
+            self.sim.step()
+
+
     def set_control_input(self, ctrl):
-        assert ctrl.shape[0] == 9
-        self.sim.data.ctrl[:9] = ctrl
+        assert ctrl.shape[0] == 6
+        self.sim.data.ctrl[:6] = ctrl
+
+
+    def set_difference_control_input(self, diff_ctrl):
+        assert diff_ctrl.shape[0] == 6
+        self.sim.data.ctrl[:6] = self.sim.data.qpos[:6] + diff_ctrl
