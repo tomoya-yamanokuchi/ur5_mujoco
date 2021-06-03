@@ -1,0 +1,27 @@
+{
+    "python.pythonPath" : "/home/tomoya-y/.venv_python3.7/bin/python",
+    "editor.fontFamily" : "Ubuntu Mono",
+    "editor.fontSize"   : 16,
+    "editor.tabSize"    : 4,
+    "editor.insertSpaces": true,
+    "python.formatting.blackPath": "/home/tomoya-y/.venv_python3.7/bin/black",
+    "python.formatting.provider": "black",
+    "python.languageServer": "Pylance",
+    "python.analysis.extraPaths": [
+        "./scripts"
+    ],
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./scripts",
+        "-p",
+        "*test*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true,
+
+    // << trailing-spaces >>
+    "trailing-spaces.backgroundColor": "rgba(255,0,0,0.0)",
+    "trailing-spaces.trimOnSave": true
+}
