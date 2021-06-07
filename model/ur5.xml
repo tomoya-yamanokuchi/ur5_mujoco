@@ -67,7 +67,7 @@
     </asset>
 
     <worldbody>
-        <geom name="floor_grey_tile" pos="0 0 -0.001" size="1.0 1.0 0.05" type="plane" material="tile"/>
+        <geom name="floor_grey_tile" pos="0 0.4 -0.001" size="1.0 1.0 0.05" type="plane" solimp="1 1 0 0.5 2" material="tile"/>
 
         <!-- light -->
         <light directional="true" pos="-0.5 0.5 3" dir="0 0 -1" />
@@ -143,69 +143,33 @@
                                     </body> -->
 
 
-                                    <body name="gripper" pos="-0.025 0 0" quat="0.707107 0 -0.707107 0">
-                                        <!-- <inertial pos="0 0.0823 0" quat="0.707107 -0.707107 0 0" mass="0" diaginertia="0 0 0" /> -->
+                                    <body name="gripper" pos="-0.0565 0 0" quat="0.707107 0 -0.707107 0">
+                                        <inertial pos="0 0.0823 0" quat="0.707107 -0.707107 0 0" mass="0" diaginertia="0 0 0" />
 
-                                        <!--camera name="gripper_camera" euler="0 3.14159265 0" fovy="63.5" /-->
-                                        <!-- <geom name="light_1" type="sphere" size="0.005" pos="0.035 0 0.0166" material="Light" />
-                                        <geom name="light_2" type="sphere" size="0.005" pos="-0.035 0 0.0166" material="Light" /> -->
-                                        <!-- <geom name="FTS-300-S_support_20210305_mesh" type="mesh" mesh="FTS-300-S_support_20210305" pos="0 0 0" material="GriMat" /> -->
 
-                                        <body name="robotiq_FT300_force_torque_senser" pos="0 0 0.05">
-                                            <geom name="inner_cylinder" type="cylinder" pos="0 0 0.00325" size="0.0315 0.01875" material="GriMat"/>
-                                            <geom name="outer_cylinder" type="cylinder" pos="0 0 0"       size="0.0375 0.0155"  material="GriMat" />
+                                        <body name="robotiq_FT300_force_torque_senser" pos="0 0 0">
+                                            <geom name="inner_cylinder"  type="cylinder" pos="0 0 0.00325" size="0.0315 0.01875" material="GriMat"/>
+                                            <geom name="outer_cylinder"  type="cylinder" pos="0 0 0"       size="0.0375 0.0155"  material="GriMat" />
+                                        </body>
+                                        <body name="robotiq_85_base_body" pos="0 0 0">
+                                            <geom name="robotiq_85_base" type="mesh"     pos="0 0 0.022"   mesh="robotiq_85_base_link"  quat="0.707107 0 -0.707107 0" material="GriMat"/>
+                                        </body>
+
+                                        <body name="tips" pos="0 0 0.1">
+                                            <geom name="tip_base"  type="box" pos="0 0 0.005"       size="0.01 0.0425 0.005" solimp="1 1 0 0.5 2" material="GriMat"/>
+                                        </body>
+
+                                        <body name="tip_left_body" pos="0 -0.085 0.1" quat="1 0 0 0">
+                                            <geom name="tip_left" type="box" pos="0  0.0464 0.037" size="0.011 0.0039 0.0375"  solimp="1 1 0 0.5 2" friction="5 0.005 0.0001" material="GriMat"/>
+                                            <joint name="joint_tip_left" type="slide" axis="0 1 0" pos="0 0 0" frictionloss="0.01"  damping="0.3" limited="true" range="0 0.033"/>
                                         </body>
 
 
-
-                                        <!-- <geom name="robotiq_85_base_link_mesh" type="mesh" mesh="robotiq_85_base_link" pos="0 0 0.05" quat="0.707107 0 -0.707107 0" material="GriMat" /> -->
-
-                                        <!-- <body name="right_driver" pos="0 -0.0306011 0.054904" quat="0.707107 0 -0.707107 0">
-                                            <geom name="right_driver_mesh" type="mesh" mesh="robotiq_85_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
-                                            <joint name="joint7_1" axis="0 0 1" type="hinge" limited="true" range="0 0.872664626" />
-
-
-                                            <body name="right_coupler" pos="0 -0.0315 0">
-                                                <geom name="right_coupler_mesh" type="mesh" mesh="robotiq_85_finger_link" material="GriMat" contype="0" conaffinity="0" />
-                                                <joint name="joint8_1" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
-
-                                                <body name="right_follower_link" pos="0.0475 -0.006 0">
-                                                    <geom name="right_follower_mesh" pos="0.0025 0.021 0" type="mesh" mesh="robotiq_85_finger_tip_link" material="GriMat" />
-                                                    <joint name="joint9_1" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
-                                                </body>
-
-                                            </body>
-
-                                        </body> -->
-
-                                        <!-- <body name="right_spring_link" pos="0.0016 -0.012 0.0614" quat="0.707107 0 -0.707107 0">
-                                            <geom name="right_spring_mesh" type="mesh" pos="0 -0.0005 0.0016" mesh="robotiq_85_inner_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
-                                            <joint name="joint10_1" axis="0 0 1" type="hinge" limited="true" range="0 1" />
+                                        <body name="tip_right_body" pos="0 0.085 0.1" quat="0 0 0 1">
+                                            <geom name="tip_right" type="box" pos="0  0.0464 0.037" size="0.011 0.0039 0.0375"  solimp="1 1 0 0.5 2" friction="5 0.005 0.0001" material="GriMat"/>
+                                            <joint name="joint_tip_right" type="slide" axis="0 1 0" pos="0 0 0" frictionloss="0.01"  damping="0.3" limited="true" range="0 0.033"/>
                                         </body>
 
-
-                                        <body name="left_driver" pos="0 0.0306011 0.054904" quat="0 0.707107 0 0.707107">
-                                            <geom name="left_driver_mesh" type="mesh" mesh="robotiq_85_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
-                                            <joint name="joint7_2" axis="0 0 1" type="hinge" limited="true" range="0 0.872664626" />
-
-
-                                            <body name="left_coupler" pos="0 -0.0315 0">
-                                                <geom name="left_coupler_mesh" type="mesh" mesh="robotiq_85_finger_link" material="GriMat" contype="0" conaffinity="0" />
-                                                <joint name="joint8_2" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
-
-                                                <body name="left_follower_link" pos="0.0475 -0.006 0">
-                                                    <geom name="left_follower_mesh" pos="0.0025 0.021 0" type="mesh" mesh="robotiq_85_finger_tip_link" material="GriMat" />
-                                                    <joint name="joint9_2" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
-                                                </body>
-
-                                            </body>
-
-                                        </body>
-
-                                        <body name="left_spring_link" pos="0.0016 0.012 0.0614" quat="0 0.707107 0 0.707107">
-                                            <geom name="left_spring_mesh" type="mesh" pos="0 0.0005 0.0016" mesh="robotiq_85_inner_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
-                                            <joint name="joint10_2" axis="0 0 1" type="hinge" limited="true" range="0 1" />
-                                        </body> -->
 
                                     </body>
 
@@ -217,15 +181,35 @@
                 </body>
             </body>
         </body>
+
+        <body name="box" pos="-0.3 0.8 0.03">
+            <freejoint/>
+            <geom name="box_geom" type="box" size="0.02 0.02 0.02" mass="0.01" solimp="1 1 0 0.5 2" friction="2 2 2" rgba="1 0 0 1"/>
+        </body>
+
+        <body name="basket" pos="0.1 0.8 0.01">
+            <geom name="basket_bottom" type="box" size="0.07 0.07 0.005" pos=" 0.00 0 0" mass="0.01" solimp="1 1 0 0.5 2" euler="0 0.00 0" friction="2 2 2" rgba="0.3 0.3 0.3 0.4"/>
+            <body name="basket_wall">
+                <geom name="basket_wall1"  type="box" size="0.05 0.07 0.005" pos=" 0.07     0 0.045" mass="0.01" solimp="1 1 0 0.5 2" euler="0 1.57 0" friction="2 2 2" rgba="0.3 0.3 0.3 0.4"/>
+                <geom name="basket_wall2"  type="box" size="0.05 0.07 0.005" pos="-0.07     0 0.045" mass="0.01" solimp="1 1 0 0.5 2" euler="0 1.57 0" friction="2 2 2" rgba="0.3 0.3 0.3 0.4"/>
+                <geom name="basket_wall3"  type="box" size="0.07 0.05 0.005" pos="    0 -0.07 0.045" mass="0.01" solimp="1 1 0 0.5 2" euler="1.57 0 0" friction="2 2 2" rgba="0.3 0.3 0.3 0.4"/>
+                <geom name="basket_wall4"  type="box" size="0.07 0.05 0.005" pos="    0  0.07 0.045" mass="0.01" solimp="1 1 0 0.5 2" euler="1.57 0 0" friction="2 2 2" rgba="0.3 0.3 0.3 0.4"/>
+            </body>
+            <freejoint/>
+        </body>
+
     </worldbody>
 
     <actuator>
-        <general name="joint0_actuator"  joint="joint0" ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
-        <general name="joint1_actuator"  joint="joint1" ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
-        <general name="joint2_actuator"  joint="joint2" ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
-        <general name="joint3_actuator"  joint="joint3" ctrllimited="true" forcelimited="true" ctrlrange=" 0                  1.5707963267948966" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
-        <general name="joint4_actuator"  joint="joint4" ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
-        <general name="joint5_actuator"  joint="joint5" ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+        <general name="joint0_actuator"  joint="joint0"        ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+        <general name="joint1_actuator"  joint="joint1"        ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+        <general name="joint2_actuator"  joint="joint2"        ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+        <general name="joint3_actuator"  joint="joint3"        ctrllimited="true" forcelimited="true" ctrlrange=" 0                  1.5707963267948966" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+        <general name="joint4_actuator"  joint="joint4"        ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+        <general name="joint5_actuator"  joint="joint5"        ctrllimited="true" forcelimited="true" ctrlrange="-0.7853981633974483 0.7853981633974483" forcerange="-300 300" biastype="affine" gainprm="300 0 0" biasprm="0 -300 0" />
+
+        <position name="joint_tip_left_actuator"  joint="joint_tip_left"  kp="10" ctrllimited="true" ctrlrange="0 0.033"/>
+        <position name="joint_tip_right_actuator" joint="joint_tip_right" kp="10" ctrllimited="true" ctrlrange="0 0.033"/>
     </actuator>
 
 </mujoco>
