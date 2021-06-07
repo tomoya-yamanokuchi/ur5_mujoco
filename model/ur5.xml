@@ -47,6 +47,15 @@
         <mesh file="link6.stl" />
         <mesh file="link6_connector.stl" />
 
+        <mesh file="FTS-300-S_support_20210305.stl" />
+        <mesh file="robotiq_85_base_link.stl" />
+        <mesh file="robotiq_85_finger_link.stl" />
+        <mesh file="robotiq_85_finger_tip_link.stl" />
+        <mesh file="robotiq_85_inner_knuckle_link.stl" />
+        <mesh file="robotiq_85_knuckle_link.stl" />
+
+        <material name="GriMat" specular="0.9" shininess="0.5" reflectance="0" rgba="0.1 0.1 0.1 1" emission="0.1" />
+
         <texture name="floor_tile" file="meshes/floor_tile.png" width="3000" height="3000" type="2d"/>
         <material name="tile"   texture="floor_tile" specular="0" shininess="0" reflectance="0" emission="1" />
 
@@ -124,6 +133,83 @@
                                     <geom name="link6_connector"    type="mesh" mesh="link6_connector"  pos="0 0 0"         material="black" conaffinity="32" contype="32"/>
                                     <geom name="link6"              type="mesh" mesh="link6"            pos="-0.008 0 0"    material="silver"/>
                                     <body name="EE" pos="-0.04 0 0" euler="0 0 0"/>
+
+
+                                    <!-- <body name="gripper" pos="-0.04165 0 0.05305">
+                                        <joint name="joint6" type="hinge" axis="-1 0 0" pos="0 0 0" frictionloss="20"  damping="30" limited="true" range="-0.7853981633974483 0.7853981633974483"/>
+                                        <inertial pos="-0.038841 0 0" mass="0.365" diaginertia="0.1 0.1 0.1"/>
+                                        <geom name="kinova_robotiq_coupler_mesh" type="mesh" mesh="kinova_robotiq_coupler" pos="0 0 0.0466" material="GriMat" />
+                                        <body name="gg" pos="-0.04 0 0" euler="0 0 0"/>
+                                    </body> -->
+
+
+                                    <body name="gripper" pos="-0.025 0 0" quat="0.707107 0 -0.707107 0">
+                                        <!-- <inertial pos="0 0.0823 0" quat="0.707107 -0.707107 0 0" mass="0" diaginertia="0 0 0" /> -->
+
+                                        <!--camera name="gripper_camera" euler="0 3.14159265 0" fovy="63.5" /-->
+                                        <!-- <geom name="light_1" type="sphere" size="0.005" pos="0.035 0 0.0166" material="Light" />
+                                        <geom name="light_2" type="sphere" size="0.005" pos="-0.035 0 0.0166" material="Light" /> -->
+                                        <!-- <geom name="FTS-300-S_support_20210305_mesh" type="mesh" mesh="FTS-300-S_support_20210305" pos="0 0 0" material="GriMat" /> -->
+
+                                        <body name="robotiq_FT300_force_torque_senser" pos="0 0 0.05">
+                                            <geom name="inner_cylinder" type="cylinder" pos="0 0 0.00325" size="0.0315 0.01875" material="GriMat"/>
+                                            <geom name="outer_cylinder" type="cylinder" pos="0 0 0"       size="0.0375 0.0155"  material="GriMat" />
+                                        </body>
+
+
+
+                                        <!-- <geom name="robotiq_85_base_link_mesh" type="mesh" mesh="robotiq_85_base_link" pos="0 0 0.05" quat="0.707107 0 -0.707107 0" material="GriMat" /> -->
+
+                                        <!-- <body name="right_driver" pos="0 -0.0306011 0.054904" quat="0.707107 0 -0.707107 0">
+                                            <geom name="right_driver_mesh" type="mesh" mesh="robotiq_85_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
+                                            <joint name="joint7_1" axis="0 0 1" type="hinge" limited="true" range="0 0.872664626" />
+
+
+                                            <body name="right_coupler" pos="0 -0.0315 0">
+                                                <geom name="right_coupler_mesh" type="mesh" mesh="robotiq_85_finger_link" material="GriMat" contype="0" conaffinity="0" />
+                                                <joint name="joint8_1" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
+
+                                                <body name="right_follower_link" pos="0.0475 -0.006 0">
+                                                    <geom name="right_follower_mesh" pos="0.0025 0.021 0" type="mesh" mesh="robotiq_85_finger_tip_link" material="GriMat" />
+                                                    <joint name="joint9_1" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
+                                                </body>
+
+                                            </body>
+
+                                        </body> -->
+
+                                        <!-- <body name="right_spring_link" pos="0.0016 -0.012 0.0614" quat="0.707107 0 -0.707107 0">
+                                            <geom name="right_spring_mesh" type="mesh" pos="0 -0.0005 0.0016" mesh="robotiq_85_inner_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
+                                            <joint name="joint10_1" axis="0 0 1" type="hinge" limited="true" range="0 1" />
+                                        </body>
+
+
+                                        <body name="left_driver" pos="0 0.0306011 0.054904" quat="0 0.707107 0 0.707107">
+                                            <geom name="left_driver_mesh" type="mesh" mesh="robotiq_85_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
+                                            <joint name="joint7_2" axis="0 0 1" type="hinge" limited="true" range="0 0.872664626" />
+
+
+                                            <body name="left_coupler" pos="0 -0.0315 0">
+                                                <geom name="left_coupler_mesh" type="mesh" mesh="robotiq_85_finger_link" material="GriMat" contype="0" conaffinity="0" />
+                                                <joint name="joint8_2" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
+
+                                                <body name="left_follower_link" pos="0.0475 -0.006 0">
+                                                    <geom name="left_follower_mesh" pos="0.0025 0.021 0" type="mesh" mesh="robotiq_85_finger_tip_link" material="GriMat" />
+                                                    <joint name="joint9_2" axis="0 0 1" type="hinge" limited="true" range="0 2.967059728" />
+                                                </body>
+
+                                            </body>
+
+                                        </body>
+
+                                        <body name="left_spring_link" pos="0.0016 0.012 0.0614" quat="0 0.707107 0 0.707107">
+                                            <geom name="left_spring_mesh" type="mesh" pos="0 0.0005 0.0016" mesh="robotiq_85_inner_knuckle_link" material="GriMat" contype="0" conaffinity="0" />
+                                            <joint name="joint10_2" axis="0 0 1" type="hinge" limited="true" range="0 1" />
+                                        </body> -->
+
+                                    </body>
+
+
                                 </body>
                             </body>
                         </body>
